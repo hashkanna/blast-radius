@@ -1,0 +1,168 @@
+[
+  {
+    "max_ticks": 250,
+    "policy": "naive_baseline",
+    "seed": 0,
+    "t_a": 64,
+    "t_b": 148,
+    "type": "start"
+  },
+  {
+    "alerts": [],
+    "content": [
+      "raw.orders_api",
+      "raw.ad_spend",
+      "raw.fx_rates",
+      "stg.orders",
+      "mart.daily_revenue",
+      "mart.marketing_roi",
+      "dash.revenue_health",
+      "dash.marketing_health"
+    ],
+    "finished": false,
+    "reward": -0.0005,
+    "tick": 0,
+    "tool": "list_tables",
+    "type": "tool"
+  },
+  {
+    "alerts": [
+      "[tick 84] correctness_violation: dash.revenue_health total_revenue_usd null rate above 1%"
+    ],
+    "content": {
+      "waited": 84
+    },
+    "finished": false,
+    "reward": 0.38096000000000035,
+    "tick": 84,
+    "tool": "wait_to_first_alert",
+    "type": "tool"
+  },
+  {
+    "alerts": [
+      "[tick 85] correctness_violation: dash.revenue_health total_revenue_usd null rate above 1%"
+    ],
+    "content": {
+      "freshness_ok": false,
+      "row_count_ok": true,
+      "sample_correctness": false,
+      "schema_ok": true
+    },
+    "finished": false,
+    "reward": -0.4804,
+    "tick": 85,
+    "tool": "run_data_test(revenue)",
+    "type": "tool"
+  },
+  {
+    "alerts": [
+      "[tick 85] correctness_violation: dash.revenue_health total_revenue_usd null rate above 1%"
+    ],
+    "content": {
+      "correct": false,
+      "incident_kind": "schema_drift"
+    },
+    "finished": false,
+    "reward": -2.0,
+    "tick": 85,
+    "tool": "submit_diagnosis(leaf)",
+    "type": "tool"
+  },
+  {
+    "alerts": [
+      "[tick 87] correctness_violation: dash.revenue_health total_revenue_usd null rate above 1%"
+    ],
+    "content": {
+      "accepted": false,
+      "reason": "fix broke a healthy path"
+    },
+    "finished": false,
+    "reward": -6.01432,
+    "tick": 87,
+    "tool": "apply_fix(backfill_leaf)",
+    "type": "tool"
+  },
+  {
+    "alerts": [
+      "[tick 107] correctness_violation: dash.revenue_health total_revenue_usd null rate above 1%"
+    ],
+    "content": {
+      "waited": 20
+    },
+    "finished": false,
+    "reward": -11.368000000000002,
+    "tick": 107,
+    "tool": "wait_for_symptom_to_return",
+    "type": "tool"
+  },
+  {
+    "alerts": [
+      "[tick 108] correctness_violation: dash.revenue_health total_revenue_usd null rate above 1%"
+    ],
+    "content": {
+      "observed_edges": [
+        [
+          "mart.daily_revenue",
+          "dash.revenue_health"
+        ]
+      ],
+      "table": "dash.revenue_health"
+    },
+    "finished": false,
+    "reward": -0.67572,
+    "tick": 108,
+    "tool": "trace_lineage(shallow)",
+    "type": "tool"
+  },
+  {
+    "alerts": [
+      "[tick 108] correctness_violation: dash.revenue_health total_revenue_usd null rate above 1%"
+    ],
+    "content": {
+      "correct": false,
+      "incident_kind": "schema_drift"
+    },
+    "finished": false,
+    "reward": -2.0,
+    "tick": 108,
+    "tool": "submit_diagnosis(downstream_transform)",
+    "type": "tool"
+  },
+  {
+    "alerts": [
+      "[tick 110] correctness_violation: dash.revenue_health total_revenue_usd null rate above 1%"
+    ],
+    "content": {
+      "accepted": false,
+      "reason": "fix broke a healthy path"
+    },
+    "finished": false,
+    "reward": -6.37496,
+    "tick": 110,
+    "tool": "apply_fix(rollback_downstream)",
+    "type": "tool"
+  },
+  {
+    "alerts": [
+      "[tick 185] correctness_violation: dash.revenue_health total_revenue_usd null rate above 1%",
+      "[tick 185] budget_violation: cumulative BigQuery cost 1217.75 exceeds threshold"
+    ],
+    "content": {
+      "waited": 140
+    },
+    "finished": true,
+    "reward": -136.37279999999998,
+    "tick": 185,
+    "tool": "wait_until_terminal",
+    "type": "tool"
+  },
+  {
+    "final_tick": 185,
+    "finished": true,
+    "policy": "naive_baseline",
+    "resolved_incidents": [],
+    "score_total": -164.90573999999998,
+    "tool_calls": 10,
+    "type": "summary"
+  }
+]

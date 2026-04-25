@@ -1,0 +1,24 @@
+{
+  "competent": {
+    "final_tick": 250,
+    "finished": true,
+    "policy": "competent",
+    "resolved_incidents": [
+      "cost_explosion",
+      "schema_drift"
+    ],
+    "score_total": 5.6135,
+    "tool_calls": 15,
+    "type": "summary"
+  },
+  "naive_baseline": {
+    "final_tick": 185,
+    "finished": true,
+    "policy": "naive_baseline",
+    "resolved_incidents": [],
+    "score_total": -164.90573999999998,
+    "tool_calls": 10,
+    "type": "summary"
+  },
+  "score_delta": 170.51923999999997
+}

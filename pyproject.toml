@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "blast-radius"
+version = "0.1.0"
+description = "A non-stationary RL environment for hidden-lineage incident diagnosis."
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+ors = ["openreward>=0.1.95", "pydantic>=2"]
+agent = ["openai>=1.88", "openreward>=0.1.95", "pydantic>=2"]
+dev = ["pydantic>=2", "pytest>=8"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

@@ -1,0 +1,283 @@
+[
+  {
+    "max_ticks": 250,
+    "policy": "competent",
+    "seed": 0,
+    "t_a": 64,
+    "t_b": 148,
+    "type": "start"
+  },
+  {
+    "alerts": [],
+    "content": [
+      "raw.orders_api",
+      "raw.ad_spend",
+      "raw.fx_rates",
+      "stg.orders",
+      "mart.daily_revenue",
+      "mart.marketing_roi",
+      "dash.revenue_health",
+      "dash.marketing_health"
+    ],
+    "finished": false,
+    "reward": -0.0005,
+    "tick": 0,
+    "tool": "list_tables",
+    "type": "tool"
+  },
+  {
+    "alerts": [
+      "[tick 84] correctness_violation: dash.revenue_health total_revenue_usd null rate above 1%"
+    ],
+    "content": {
+      "waited": 84
+    },
+    "finished": false,
+    "reward": 0.38096000000000035,
+    "tick": 84,
+    "tool": "wait_to_schema_symptom",
+    "type": "tool"
+  },
+  {
+    "alerts": [
+      "[tick 85] correctness_violation: dash.revenue_health total_revenue_usd null rate above 1%"
+    ],
+    "content": {
+      "observed_edges": [
+        [
+          "mart.daily_revenue",
+          "dash.revenue_health"
+        ],
+        [
+          "stg.orders",
+          "mart.daily_revenue"
+        ],
+        [
+          "raw.orders_api",
+          "stg.orders"
+        ]
+      ],
+      "table": "dash.revenue_health"
+    },
+    "finished": false,
+    "reward": -0.4954,
+    "tick": 85,
+    "tool": "trace_lineage(revenue)",
+    "type": "tool"
+  },
+  {
+    "alerts": [
+      "[tick 85] correctness_violation: dash.revenue_health total_revenue_usd null rate above 1%"
+    ],
+    "content": {
+      "currency": "STRING",
+      "customer_id": "STRING",
+      "ingest_date": "DATE",
+      "order_amount": "FLOAT",
+      "order_id": "STRING",
+      "order_ts": "TIMESTAMP"
+    },
+    "finished": false,
+    "reward": -0.0025000000000000005,
+    "tick": 85,
+    "tool": "inspect_schema(raw.orders_api)",
+    "type": "tool"
+  },
+  {
+    "alerts": [
+      "[tick 85] correctness_violation: dash.revenue_health total_revenue_usd null rate above 1%"
+    ],
+    "content": [
+      "[tick 85] raw.orders_api: heartbeat ok",
+      "[tick 85] raw.orders_api: emitted 50 sampled log lines"
+    ],
+    "finished": false,
+    "reward": -0.001,
+    "tick": 85,
+    "tool": "tail_logs(raw.orders_api)",
+    "type": "tool"
+  },
+  {
+    "alerts": [
+      "[tick 85] correctness_violation: dash.revenue_health total_revenue_usd null rate above 1%"
+    ],
+    "content": {
+      "correct": true,
+      "incident_kind": "schema_drift"
+    },
+    "finished": false,
+    "reward": 3.5999999999999996,
+    "tick": 85,
+    "tool": "submit_diagnosis(schema)",
+    "type": "tool"
+  },
+  {
+    "alerts": [
+      "[tick 87] correctness_violation: dash.revenue_health total_revenue_usd null rate above 1%"
+    ],
+    "content": {
+      "accepted": true,
+      "pending": "schema_drift"
+    },
+    "finished": false,
+    "reward": -1.01432,
+    "tick": 87,
+    "tool": "apply_fix(schema)",
+    "type": "tool"
+  },
+  {
+    "alerts": [],
+    "content": {
+      "waited": 5
+    },
+    "finished": false,
+    "reward": 3.3107199999999994,
+    "tick": 92,
+    "tool": "wait_for_schema_clear",
+    "type": "tool"
+  },
+  {
+    "alerts": [],
+    "content": {
+      "freshness_ok": true,
+      "row_count_ok": true,
+      "sample_correctness": true,
+      "schema_ok": true
+    },
+    "finished": false,
+    "reward": 0.01176,
+    "tick": 93,
+    "tool": "run_data_test(revenue)",
+    "type": "tool"
+  },
+  {
+    "alerts": [
+      "[tick 163] budget_violation: cumulative BigQuery cost 644.65 exceeds threshold"
+    ],
+    "content": {
+      "waited": 70
+    },
+    "finished": false,
+    "reward": -5.698720000000001,
+    "tick": 163,
+    "tool": "wait_to_cost_symptom",
+    "type": "tool"
+  },
+  {
+    "alerts": [
+      "[tick 163] budget_violation: cumulative BigQuery cost 644.65 exceeds threshold"
+    ],
+    "content": [
+      {
+        "job_id": "job_mart.marketing_roi_163",
+        "query": "SELECT spend_date, total_spend, attributed_revenue, roi FROM stg.orders JOIN raw...",
+        "slot_ms": 25000,
+        "status": "SUCCESS",
+        "table": "mart.marketing_roi",
+        "tick": 163
+      },
+      {
+        "job_id": "job_mart.marketing_roi_162",
+        "query": "SELECT spend_date, total_spend, attributed_revenue, roi FROM stg.orders JOIN raw...",
+        "slot_ms": 25000,
+        "status": "SUCCESS",
+        "table": "mart.marketing_roi",
+        "tick": 162
+      },
+      {
+        "job_id": "job_mart.marketing_roi_161",
+        "query": "SELECT spend_date, total_spend, attributed_revenue, roi FROM stg.orders JOIN raw...",
+        "slot_ms": 25000,
+        "status": "SUCCESS",
+        "table": "mart.marketing_roi",
+        "tick": 161
+      },
+      {
+        "job_id": "job_mart.marketing_roi_160",
+        "query": "SELECT spend_date, total_spend, attributed_revenue, roi FROM stg.orders JOIN raw...",
+        "slot_ms": 25000,
+        "status": "SUCCESS",
+        "table": "mart.marketing_roi",
+        "tick": 160
+      },
+      {
+        "job_id": "job_mart.marketing_roi_159",
+        "query": "SELECT spend_date, total_spend, attributed_revenue, roi FROM stg.orders JOIN raw...",
+        "slot_ms": 25000,
+        "status": "SUCCESS",
+        "table": "mart.marketing_roi",
+        "tick": 159
+      }
+    ],
+    "finished": false,
+    "reward": -0.0025000000000000005,
+    "tick": 163,
+    "tool": "get_job_history(marketing_roi)",
+    "type": "tool"
+  },
+  {
+    "alerts": [
+      "[tick 163] budget_violation: cumulative BigQuery cost 644.65 exceeds threshold"
+    ],
+    "content": {
+      "estimated_cost": 25.0,
+      "job_id": "job_mart.marketing_roi_163",
+      "partition_filter": null,
+      "table": "mart.marketing_roi"
+    },
+    "finished": false,
+    "reward": -0.005000000000000001,
+    "tick": 163,
+    "tool": "inspect_query_plan(marketing_roi)",
+    "type": "tool"
+  },
+  {
+    "alerts": [
+      "[tick 163] budget_violation: cumulative BigQuery cost 644.65 exceeds threshold"
+    ],
+    "content": {
+      "correct": true,
+      "incident_kind": "cost_explosion"
+    },
+    "finished": false,
+    "reward": 1.0,
+    "tick": 163,
+    "tool": "submit_diagnosis(cost)",
+    "type": "tool"
+  },
+  {
+    "alerts": [],
+    "content": {
+      "accepted": true,
+      "pending": "cost_explosion"
+    },
+    "finished": false,
+    "reward": 1.1300000000000001,
+    "tick": 165,
+    "tool": "apply_fix(cost)",
+    "type": "tool"
+  },
+  {
+    "alerts": [],
+    "content": {
+      "waited": 85
+    },
+    "finished": true,
+    "reward": 3.400000000000002,
+    "tick": 250,
+    "tool": "wait_to_end",
+    "type": "tool"
+  },
+  {
+    "final_tick": 250,
+    "finished": true,
+    "policy": "competent",
+    "resolved_incidents": [
+      "cost_explosion",
+      "schema_drift"
+    ],
+    "score_total": 5.6135,
+    "tool_calls": 15,
+    "type": "summary"
+  }
+]

@@ -1,0 +1,3 @@
+openreward>=0.1.95
+pydantic>=2
+-e .
